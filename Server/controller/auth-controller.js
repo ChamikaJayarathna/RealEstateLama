@@ -1,4 +1,6 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import 'dotenv/config';
 import prisma from "../lib/prisma.js";
 
 export const register = async (req, res) => {
@@ -29,15 +31,19 @@ export const login = async (req, res) => {
 
     const user = await prisma.user.findUnique({
       where:{ username }
-    })
-
-    if(!user) return res.status(401).json({message: "Invalid Credentials!"});
+    });
+    
+    if(!user) {return res.status(401).json({message: "Invalid Credentials!"});}
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    if(!isPasswordValid) return res.status(401).json({message: "Invalid Credentials!"});
+    if(!isPasswordValid) {return res.status(401).json({message: "Invalid Credentials!"});}
     
-    res.cookie("test", "myValue", {
+    const token = jwt.sign({
+      id: user.id,
+    }, process.env.JWT_SECRET_KEY, {expiresIn:age});
+
+    res.cookie("token", token, {
       httpOnly: true,
       secure: true,
       maxAge: age,
