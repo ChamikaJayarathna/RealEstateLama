@@ -1,5 +1,6 @@
 import React from 'react'
 import './HomePage.scss';
+import SearchBar from '../../components/SearchBar/SearchBar';
 
 const HomePage = () => {
   return (
@@ -13,6 +14,21 @@ const HomePage = () => {
                     facilis id pariatur fugit quos laudantium temporibus dolor ea
                     repellat provident impedit!
                 </p>
+                <SearchBar/>
+                <div className="boxes">
+                    <div className="box">
+                        <h1>16+</h1>
+                        <h2>Years of Experience</h2>
+                    </div>
+                    <div className="box">
+                        <h1>200</h1>
+                        <h2>Award Gained</h2>
+                    </div>
+                    <div className="box">
+                        <h1>2000+</h1>
+                        <h2>Property Ready</h2>
+                    </div>
+                </div>
             </div>
         </div>
 
