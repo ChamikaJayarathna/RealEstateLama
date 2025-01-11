@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage/HomePage';
 import ListPage from './pages/ListPage/ListPage';
 import Layout from './pages/Layout/Layout';
 import SinglePage from './pages/SinglePage/SinglePage';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 
 const App = () => {
 
@@ -23,6 +24,10 @@ const App = () => {
         {
           path: '/:id',
           element: <SinglePage/>
+        },
+        {
+          path: '/profile',
+          element: <ProfilePage/>
         }
       ]
     },
