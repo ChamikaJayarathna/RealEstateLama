@@ -6,6 +6,7 @@ import Layout from './pages/Layout/Layout';
 import SinglePage from './pages/SinglePage/SinglePage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import LoginPage from './pages/LoginPage/LoginPage';
+import Register from './pages/RegisterPage/Register';
 
 const App = () => {
 
@@ -33,6 +34,10 @@ const App = () => {
         {
           path: '/login',
           element: <LoginPage/>
+        },
+        {
+          path: '/register',
+          element: <Register/>
         }
       ]
     },
