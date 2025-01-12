@@ -5,6 +5,7 @@ import ListPage from './pages/ListPage/ListPage';
 import Layout from './pages/Layout/Layout';
 import SinglePage from './pages/SinglePage/SinglePage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
+import LoginPage from './pages/LoginPage/LoginPage';
 
 const App = () => {
 
@@ -28,6 +29,10 @@ const App = () => {
         {
           path: '/profile',
           element: <ProfilePage/>
+        },
+        {
+          path: '/login',
+          element: <LoginPage/>
         }
       ]
     },
