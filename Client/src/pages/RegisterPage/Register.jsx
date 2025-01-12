@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Register.scss";
 
 const Register = () => {
 
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError("");
 
     const formData = new FormData(e.target);
 
@@ -23,14 +28,13 @@ const Register = () => {
         password,
       });
 
-      console.log(res.data);
-      
+      navigate('/login');
       
     } catch (error) {
-      console.log(error);
+      setError(error.response.data.message);
+    } finally{
+      setIsLoading(false);
     }
-
-
   }
 
   return (
@@ -41,7 +45,8 @@ const Register = () => {
           <input name="username" type="text" placeholder="Username" />
           <input name="email" type="text" placeholder="Email" />
           <input name="password" type="password" placeholder="Password" />
-          <button>Register</button>
+          <button disabled={isLoading}>Register</button>
+          {error && <span>{error}</span>}
           <Link to="/login">Do you have an account?</Link>
         </form>
       </div>
