@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 import "./LoginPage.scss";
 
 const LoginPage = () => {
@@ -8,6 +9,7 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+  const { updateUser } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,13 +30,12 @@ const LoginPage = () => {
         }
       );
 
-      localStorage.setItem("user", JSON.stringify(res.data));
+      updateUser(res.data);
 
       navigate("/");
-
     } catch (error) {
       setError(error.response.data.message);
-    } finally{
+    } finally {
       setIsLoading(false);
     }
   };

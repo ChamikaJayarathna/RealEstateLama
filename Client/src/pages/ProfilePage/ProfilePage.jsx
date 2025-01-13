@@ -1,23 +1,28 @@
-import React from "react";
-import List from '../../components/List/List';
-import Chat from '../../components/Chat/Chat';
-import "./ProfilePage.scss";
 import axios from "axios";
+import React, { useContext, useEffect } from "react";
+import List from "../../components/List/List";
+import Chat from "../../components/Chat/Chat";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import "./ProfilePage.scss";
 
 const ProfilePage = () => {
-
   const navigate = useNavigate();
+  const { currentUser, updateUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!currentUser) {
+      navigate("/login");
+    }
+  },[currentUser, navigate]);
 
   const handleLogout = async () => {
     try {
-      const res = axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/api/auth/logout");
-      localStorage.removeItem('user');
-      navigate('/');
-    } catch (error) {
-      
-    }
-  }
+      await axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/api/auth/logout");
+      updateUser(null);
+      navigate("/");
+    } catch (error) {}
+  };
 
   return (
     <div className="profilePage">
@@ -30,16 +35,13 @@ const ProfilePage = () => {
           <div className="info">
             <span>
               Avatar:
-              <img
-                src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                alt=""
-              />
+              <img src={currentUser.avatar || "./noavatar.jpg"} alt="" />
             </span>
             <span>
-              Username: <b>John Doe</b>
+              Username: <b>{currentUser.username}</b>
             </span>
             <span>
-              E-mail: <b>john@gmail.com</b>
+              E-mail: <b>{currentUser.email}</b>
             </span>
             <button onClick={handleLogout}>Logout</button>
           </div>
