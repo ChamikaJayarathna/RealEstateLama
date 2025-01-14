@@ -106,9 +106,18 @@ nav {
       }
     }
 
+    // .register {
+    //   background-color: #fece51;
+    // }
+
     .register {
       background-color: #fece51;
+      height: auto; 
+      padding: 12px 24px; 
+      display: inline-block;
+      line-height: normal;
     }
+    
 
     .menuIcon {
       display: none;

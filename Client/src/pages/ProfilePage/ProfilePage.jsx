@@ -10,12 +10,6 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   const { currentUser, updateUser } = useContext(AuthContext);
 
-  useEffect(() => {
-    if (!currentUser) {
-      navigate("/login");
-    }
-  },[currentUser, navigate]);
-
   const handleLogout = async () => {
     try {
       await axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/api/auth/logout");
