@@ -8,14 +8,14 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const navigate = useNavigate();
   const { updateUser } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
-
     const formData = new FormData(e.target);
 
     const username = formData.get("username");
@@ -31,15 +31,13 @@ const LoginPage = () => {
       );
 
       updateUser(res.data);
-
       navigate("/");
-    } catch (error) {
-      setError(error.response.data.message);
+    } catch (err) {
+      setError(err.response.data.message);
     } finally {
       setIsLoading(false);
     }
   };
-
   return (
     <div className="login">
       <div className="formContainer">
