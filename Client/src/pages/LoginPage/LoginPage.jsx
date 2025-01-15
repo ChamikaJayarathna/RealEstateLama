@@ -1,4 +1,4 @@
-import axios from "axios";
+import apiRequest from "../../lib/apiRequest";
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
@@ -22,13 +22,10 @@ const LoginPage = () => {
     const password = formData.get("password");
 
     try {
-      const res = await axios.post(
-        import.meta.env.VITE_SERVER_DOMAIN + "/api/auth/login",
-        {
-          username,
-          password,
-        }
-      );
+      const res = await apiRequest.post("/auth/login", {
+        username,
+        password,
+      });
 
       updateUser(res.data);
       navigate("/");

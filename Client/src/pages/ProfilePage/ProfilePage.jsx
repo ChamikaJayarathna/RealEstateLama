@@ -1,4 +1,4 @@
-import axios from "axios";
+import apiRequest from "../../lib/apiRequest";
 import React, { useContext } from "react";
 import List from "../../components/List/List";
 import Chat from "../../components/Chat/Chat";
@@ -12,7 +12,7 @@ const ProfilePage = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/api/auth/logout");
+      await apiRequest.post("/auth/logout");
       updateUser(null);
       navigate("/");
     } catch (error) {}

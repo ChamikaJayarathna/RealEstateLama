@@ -1,4 +1,4 @@
-import axios from "axios";
+import apiRequest from "../../lib/apiRequest";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import "./ProfileUpdatePage.scss";
@@ -15,8 +15,7 @@ const ProfileUpdatePage = () => {
     const { username, email, password } = Object.fromEntries(formData);
 
     try {
-      const res = await axios.put(
-        import.meta.env.VITE_SERVER_DOMAIN + `/api/users/${currentUser.id}`,
+      const res = await apiRequest.put(`/users/${currentUser.id}`,
         {
           username,
           email,

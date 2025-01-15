@@ -1,10 +1,9 @@
+import apiRequest from "../../lib/apiRequest";
 import React, { useState } from "react";
-import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.scss";
 
 const Register = () => {
-
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -22,20 +21,19 @@ const Register = () => {
     const password = formData.get("password");
 
     try {
-      const res = await axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/api/auth/register", {
+      const res = await apiRequest.post("/auth/register", {
         username,
         email,
         password,
       });
 
-      navigate('/login');
-      
+      navigate("/login");
     } catch (error) {
       setError(error.response.data.message);
-    } finally{
+    } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="register">
