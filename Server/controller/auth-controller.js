@@ -6,6 +6,18 @@ export const register = async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        OR: [{ email }, { username }],
+      },
+    });
+
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ message: "Email or username already taken." });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await prisma.user.create({
@@ -16,9 +28,11 @@ export const register = async (req, res) => {
       },
     });
 
-    res.status(201).json({ message: "User created successfully" });
+    res
+      .status(201)
+      .json({ message: "User created successfully", user: newUser });
   } catch (error) {
-    console.log(error);
+    console.error("Error during user registration:", error);
     res.status(500).json({ message: "Failed to create user!" });
   }
 };
@@ -67,5 +81,26 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  res.clearCookie("token").status(200).json({message: "Logout Successful"});
+  res.clearCookie("token").status(200).json({ message: "Logout Successful" });
 };
+
+// export const register = async (req, res) => {
+//   const { username, email, password } = req.body;
+
+//   try {
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     const newUser = await prisma.user.create({
+//       data: {
+//         username,
+//         email,
+//         password: hashedPassword,
+//       },
+//     });
+
+//     res.status(201).json({ message: "User created successfully" });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ message: "Failed to create user!" });
+//   }
+// };
