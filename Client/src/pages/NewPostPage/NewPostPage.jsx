@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import apiRequest from "../../lib/apiRequest";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
+import { useNavigate } from "react-router-dom";
+import UploadWidget from "../../components/UploadWidget/UploadWidget";
 import "./NewPostPage.scss";
 
 const NewPostPage = () => {
   const [value, setValue] = useState("");
   const [images, setImages] = useState([]);
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,6 +44,7 @@ const NewPostPage = () => {
           restaurant: parseInt(inputs.restaurant),
         },
       });
+      navigate("/" + res.data.id);
     } catch (err) {
       console.log(err);
       setError(error);
@@ -151,7 +156,20 @@ const NewPostPage = () => {
           </form>
         </div>
       </div>
-      <div className="sideContainer"></div>
+      <div className="sideContainer">
+        {images.map((image, index) => (
+          <img src={image} key={index} alt="" />
+        ))}
+        <UploadWidget
+          uwConfig={{
+            multiple: true,
+            cloudName: "diptmwpyy",
+            uploadPreset: "estate",
+            folder: "posts",
+          }}
+          setState={setImages}
+        />
+      </div>
     </div>
   );
 };
