@@ -9,7 +9,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import Register from "./pages/RegisterPage/Register";
 import ProfileUpdatePage from "./pages/ProfileUpdatePage/ProfileUpdatePage";
 import NewPostPage from "./pages/NewPostPage/NewPostPage";
-import { singlePageLoader } from "./lib/loaders";
+import { listPageLoader, singlePageLoader } from "./lib/loaders";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -24,6 +24,7 @@ const App = () => {
         {
           path: "/list",
           element: <ListPage />,
+          loader: listPageLoader,
         },
         {
           path: "/:id",
